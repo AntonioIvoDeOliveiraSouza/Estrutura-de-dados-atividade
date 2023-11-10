@@ -1,1 +1,27 @@
+#include <stdio.h>
+#include <stdlib.b>
+#include <string.h>
+#include <locale.h>
 
+//DEFININDO STRUCT
+typedef struct Carro{
+	char placa[8];
+	char modelo[30];
+	int servico;
+} Carro;
+
+Carro quant[]; //ARRAY STRUCT DE TIPO CARRO	- GLOBAL
+
+//FUNCOES PRESENTES NO CÓDIGO:
+
+void cadastrar(); //FUNCAO DE CADASTRO
+void atenderRodas(); //FUNCAO PARA SERVICO DE RODAS
+void atenderHigiene(); //FUNCAO PARA SERVICO DE HIGIENE
+void finalizarServico(); //FUNCAO PARA FINALIZAR SERVICO
+void tirarCarro(); //FUNCAO PARA "EXCLUIR CARRO"
+
+int main(){//FUNCAO "INICIO"
+	setlocale(LC_ALL,"Portuguese");//DEFININDO IDIOMA EM PORTUGUES
+	
+	return(0);
+}
