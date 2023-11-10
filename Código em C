@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.b>
+#include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
@@ -14,14 +14,56 @@ Carro quant[]; //ARRAY STRUCT DE TIPO CARRO	- GLOBAL
 
 //FUNCOES PRESENTES NO CÓDIGO:
 
-void cadastrar(); //FUNCAO DE CADASTRO
-void atenderRodas(); //FUNCAO PARA SERVICO DE RODAS
-void atenderHigiene(); //FUNCAO PARA SERVICO DE HIGIENE
-void finalizarServico(); //FUNCAO PARA FINALIZAR SERVICO
-void tirarCarro(); //FUNCAO PARA "EXCLUIR CARRO"
+void cadastrar(){ //FUNCAO DE CADASTRO
+}
+void atenderRodas(){ //FUNCAO PARA SERVICO DE RODAS
+}
+void atenderHigiene(){ //FUNCAO PARA SERVICO DE HIGIENE
+}
+void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO
+}
+void tirarCarro(){ //FUNCAO PARA "EXCLUIR CARRO"
+}
 
 int main(){//FUNCAO "INICIO"
+	int opcao = 0; //VARIAVEL FUNCAO
 	setlocale(LC_ALL,"Portuguese");//DEFININDO IDIOMA EM PORTUGUES
-	
+	while(opcao != 6){//LOOP DO MENU
+		printf("\n _____________________________________\n");
+		printf("|SERVIÇOS DE CARRO - ESCOLHA SUA OPÇÃO|\n");
+		printf("+-------------------------------------+\n");
+		printf("[1] - CADASTRAR CARRO\n");
+		printf("[2] - SERVIÇO DE RODAS\n");
+		printf("[3] - SERVIÇO DE HIGIENE\n");
+		printf("[4] - FINALIZAR SERVIÇO\n");
+		printf("[5] - DEVOLVER CARRO\n");
+		printf("[6] - ENCERRAR APLICAÇÃO\n");
+		scanf("%d",&opcao);
+		
+		switch(opcao){//PARA CADA OPCAO, UMA FUNCAO
+			case 1:
+				cadastrar();
+				break;
+			case 2:
+				atenderRodas();
+				break;
+			case 3:
+				atenderHigiene();
+				break;
+			case 4:
+				finalizarServico();
+				break;
+			case 5:
+				tirarCarro();
+				break;
+			case 6:
+				printf("TAREFA ENCERRADA!\n");
+				opcao = 6;
+				break;
+			default:
+				printf("ESTE COMANDO NÃO EXISTE! DIGITE NOVAMENTE\n");
+				break;
+		}
+	}
 	return(0);
 }
