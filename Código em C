@@ -1,20 +1,61 @@
+/*
+	O QUE JÁ FOI FEITO NESTE CODIGO:
+	
+	1 - STRUCT CARRO IMPLEMENTADA COM SEUS ATRIBUTOS
+	2 - FUNCAO CADASTRO COM ALOCACAO DINAMICA IMPLEMENTADA
+	
+	O QUE PRECISA SER FEITO NESTE CODIGO:
+	1 - CRIAR ESTRUTURAS EM FILAS PARA SERVICO DE RODAS E HIGIENE
+	2 - IMPLEMENTAR FUNCAO SERVICO DE RODAS ------> ALOCACAO DE FILA SOMENTE PARA 2
+	3 - IMPLEMENTAR FUNCAO SERVICO DE HIGIENE ----> ALOCACAO DE FILA SOMENTE PARA 2
+	4 - IMPLEMENTAR FUNCAO DE FINALIZAR SERVICO --> ALOCACAO DE FILA SOMENTE PARA 4
+	5 - IMPLEMENTAR FUNCAO DE DEVOLVER CARRO -----> ALOCACAO DINAMICA
+	
+	O QUE EH RECOMENDADO A SE FAZER (OPCIONAL)
+	
+	1- IMPLEMENTAR FUNCAO VISUALIZAR UM
+	1 - IMPLEMENTAR FUNCAO VISUALIZAR TODOS
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
 
+#define FATIA 2
+
 //DEFININDO STRUCT
 typedef struct Carro{
 	char placa[8];
 	char modelo[30];
-	int servico;
+	int servico; // 1 PARA SERVICO DE RODAS / 2 PARA SERVICO DE HIGIENE
 } Carro;
 
-Carro quant[]; //ARRAY STRUCT DE TIPO CARRO	- GLOBAL
-
-//FUNCOES PRESENTES NO CÓDIGO:
+Carro* quant = NULL; //DEFININDO PONTEIRO
+quant_max = 0; //INICIANDO VALOR MÁXIMO
+quant_tam = 0; //INICIANDO TAMANHO 
+//FUNCOES PRESENTES NO CODIGO:
 
 void cadastrar(){ //FUNCAO DE CADASTRO
+	quant_max+=FATIA;//A CADA CHAMADA, O ESPACO CRESCE "FATIA" VEZES
+	quant = (Carro*)realloc(quant,sizeof(Carro)*quant_max);//REALOCAR MAIS ESPAÇO A CADA CHAMADA
+	
+	if (quant == NULL){ //TRATAMENTO DE ERRO
+		printf("[PROBLEMA NA ALOCAÇÃO DE MEMÓRIA!] - PROGRAMA FINALIZADO!\n");
+		exit(1);
+	}
+	else{//CASO ESTEJA TUDO CERTO - PREENCHER CAMPOS
+		printf("DIGITE:\n");
+		printf("PLACA: ");
+		scanf("%s", quant[quant_tam].placa);
+		printf("MODELO: ");
+		scanf("%s", quant[quant_tam].modelo);
+		printf("SERVICO ([1] - PARA SERVICO DE RODAS // [2] - PARA SERVICO DE HIGIENE)\n");
+		scanf("%d",&quant[quant_tam].servico);
+		
+		quant_tam++;//O NUMERO É INCREMENTADO PARA O PRÓXIMO A SER PREENCHIDO
+	}
+	
 }
 void atenderRodas(){ //FUNCAO PARA SERVICO DE RODAS
 }
@@ -58,7 +99,116 @@ int main(){//FUNCAO "INICIO"
 				break;
 			case 6:
 				printf("TAREFA ENCERRADA!\n");
-				opcao = 6;
+				free(quant);//LIBERAR MEMORIA
+				break;
+			default:
+				printf("ESTE COMANDO NÃO EXISTE! DIGITE NOVAMENTE\n");
+				break;
+		}
+	}
+	return(0);
+}/*
+	O QUE JÁ FOI FEITO NESTE CODIGO:
+	
+	1 - STRUCT CARRO IMPLEMENTADA COM SEUS ATRIBUTOS
+	2 - FUNCAO CADASTRO COM ALOCACAO DINAMICA IMPLEMENTADA
+	
+	O QUE PRECISA SER FEITO NESTE CODIGO:
+	1 - CRIAR ESTRUTURAS EM FILAS PARA SERVICO DE RODAS E HIGIENE
+	2 - IMPLEMENTAR FUNCAO SERVICO DE RODAS ------> ALOCACAO DE FILA SOMENTE PARA 2
+	3 - IMPLEMENTAR FUNCAO SERVICO DE HIGIENE ----> ALOCACAO DE FILA SOMENTE PARA 2
+	4 - IMPLEMENTAR FUNCAO DE FINALIZAR SERVICO --> ALOCACAO DE FILA SOMENTE PARA 4
+	5 - IMPLEMENTAR FUNCAO DE DEVOLVER CARRO -----> ALOCACAO DINAMICA
+	
+	O QUE EH RECOMENDADO A SE FAZER (OPCIONAL)
+	
+	1- IMPLEMENTAR FUNCAO VISUALIZAR UM
+	1 - IMPLEMENTAR FUNCAO VISUALIZAR TODOS
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+
+#define FATIA 2
+
+//DEFININDO STRUCT
+typedef struct Carro{
+	char placa[8];
+	char modelo[30];
+	int servico; // 1 PARA SERVICO DE RODAS / 2 PARA SERVICO DE HIGIENE
+} Carro;
+
+Carro* quant = NULL; //DEFININDO PONTEIRO
+quant_max = 0; //INICIANDO VALOR MÁXIMO
+quant_tam = 0; //INICIANDO TAMANHO 
+//FUNCOES PRESENTES NO CODIGO:
+
+void cadastrar(){ //FUNCAO DE CADASTRO
+	quant_max+=FATIA;//A CADA CHAMADA, O ESPACO CRESCE "FATIA" VEZES
+	quant = (Carro*)realloc(quant,sizeof(Carro)*quant_max);//REALOCAR MAIS ESPAÇO A CADA CHAMADA
+	
+	if (quant == NULL){ //TRATAMENTO DE ERRO
+		printf("[PROBLEMA NA ALOCAÇÃO DE MEMÓRIA!] - PROGRAMA FINALIZADO!\n");
+		exit(1);
+	}
+	else{//CASO ESTEJA TUDO CERTO - PREENCHER CAMPOS
+		printf("DIGITE:\n");
+		printf("PLACA: ");
+		scanf("%s", quant[quant_tam].placa);
+		printf("MODELO: ");
+		scanf("%s", quant[quant_tam].modelo);
+		printf("SERVICO ([1] - PARA SERVICO DE RODAS // [2] - PARA SERVICO DE HIGIENE)\n");
+		scanf("%d",&quant[quant_tam].servico);
+		
+		quant_tam++;//O NUMERO É INCREMENTADO PARA O PRÓXIMO A SER PREENCHIDO
+	}
+	
+}
+void atenderRodas(){ //FUNCAO PARA SERVICO DE RODAS
+}
+void atenderHigiene(){ //FUNCAO PARA SERVICO DE HIGIENE
+}
+void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO
+}
+void tirarCarro(){ //FUNCAO PARA "EXCLUIR CARRO"
+}
+
+int main(){//FUNCAO "INICIO"
+	int opcao = 0; //VARIAVEL FUNCAO
+	setlocale(LC_ALL,"Portuguese");//DEFININDO IDIOMA EM PORTUGUES
+	while(opcao != 6){//LOOP DO MENU
+		printf("\n _____________________________________\n");
+		printf("|SERVIÇOS DE CARRO - ESCOLHA SUA OPÇÃO|\n");
+		printf("+-------------------------------------+\n");
+		printf("[1] - CADASTRAR CARRO\n");
+		printf("[2] - SERVIÇO DE RODAS\n");
+		printf("[3] - SERVIÇO DE HIGIENE\n");
+		printf("[4] - FINALIZAR SERVIÇO\n");
+		printf("[5] - DEVOLVER CARRO\n");
+		printf("[6] - ENCERRAR APLICAÇÃO\n");
+		scanf("%d",&opcao);
+		
+		switch(opcao){//PARA CADA OPCAO, UMA FUNCAO
+			case 1:
+				cadastrar();
+				break;
+			case 2:
+				atenderRodas();
+				break;
+			case 3:
+				atenderHigiene();
+				break;
+			case 4:
+				finalizarServico();
+				break;
+			case 5:
+				tirarCarro();
+				break;
+			case 6:
+				printf("TAREFA ENCERRADA!\n");
+				free(quant);//LIBERAR MEMORIA
 				break;
 			default:
 				printf("ESTE COMANDO NÃO EXISTE! DIGITE NOVAMENTE\n");
