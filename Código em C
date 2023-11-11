@@ -6,12 +6,11 @@
 	3 - FUNCOES DE ENVIAR CARROS AO ESPACO DE ATENDIMENTO LIMITADO
 	
 	O QUE PRECISA SER FEITO NESTE CODIGO:
-	1 - IMPLEMENTAR FUNCAO DE FINALIZAR SERVICO --> ALOCACAO DE FILA SOMENTE PARA 4
+	1 - IMPLEMENTAR FUNCAO DE FINALIZAR SERVICO --> ALOCACAO DE FILA SOMENTE PARA 4 -------> 50%
 	2 - IMPLEMENTAR FUNCAO DE DEVOLVER CARRO -----> ALOCACAO DINAMICA
 	
 	O QUE EH RECOMENDADO A SE FAZER (OPCIONAL)
 	
-	1- IMPLEMENTAR FUNCAO VISUALIZAR UM 
 	1 - IMPLEMENTAR FUNCAO VISUALIZAR TODOS -----> 50%
 	
 	OBS: DURANTE O CADASTRO, OCORRE MOMENTOS DE SOBRESCRITA DE DADOS - NECESSÁRIO CORRIGIR!
@@ -47,10 +46,21 @@ int servRoda_tam = 0; //INICIANDO TAMANHO
 Carro* servHigi = NULL; // PONTEIRO DEFINIDO
 int servHigi_tam = 0; //INICIANDO TAMANHO
 
+//QUANDO OS ESPACOS DE SERVICO DE HIGIENE E RODAS ESTIVEREM PREENCHIDOS, OPTEI POR CRIAR UMA ESTRUTURA PARA "FILA DE ESPERA"
+Carro* fila = NULL;
+int fila_tam = 0;
+int fila_max = 0;
+
+//ESTRUTURA PARA FILA DE CARROS FINALIZADOS
+Carro* fim = NULL;
+int fim_tam = 0;
+int fim_max = 0;
 
 void cadastrar(){ //FUNCAO DE CADASTRO
 	quant_max+=FATIA;//A CADA CHAMADA, O ESPACO CRESCE "FATIA" VEZES
-	quant = (Carro*)malloc(sizeof(Carro)*FATIA);//REALOCAR MAIS ESPAÇO A CADA CHAMADA
+	fila_max+=FATIA;
+	quant = (Carro*)malloc(sizeof(Carro)*quant_max);//REALOCAR MAIS ESPAÇO A CADA CHAMADA
+	fila = (Carro*)malloc(sizeof(Carro)*fila_max);
 	
 	if (quant == NULL){ //TRATAMENTO DE ERRO
 		printf("[PROBLEMA NA ALOCAÇÃO DE MEMÓRIA!] - PROGRAMA FINALIZADO!\n");
@@ -69,45 +79,78 @@ void cadastrar(){ //FUNCAO DE CADASTRO
 		if(quant[quant_tam].servico == 1){//CASO O CARRO DESEJE SERVICO DE RODA
 			if(servRoda_tam > MAX_RODA){//SE NÃO TER VAGA
 				printf("ESTE SERVIÇO ESTÁ OCUPADO! AGUARDE NA FILA\n");//FIQUE NA FILA
-			}else{//CASO HAJA VAGA, OS DADOS DO CADASTRADOS SERA COPIADO PARA A FILA DE SERVICO E EM SEGUIDA LIBERADO DA FILA DE CADASTRADOS "EM ESPERA"
+				strcpy(fila[fila_tam].placa, quant[quant_tam].placa);
+				strcpy(fila[fila_tam].modelo, quant[quant_tam].modelo);
+				fila[fila_tam].servico = quant[quant_tam].servico;
+				fila_tam++;
+				return fila;
+			}else{//CASO HAJA VAGA, OS DADOS DO CADASTRADOS SERAO COPIADO PARA A FILA DE SERVICO E EM SEGUIDA LIBERADO DA FILA DE CADASTRADOS "EM ESPERA"
 				strcpy(servRoda[servRoda_tam].placa, quant[quant_tam].placa);
 				strcpy(servRoda[servRoda_tam].modelo, quant[quant_tam].modelo);
 				servRoda[servRoda_tam].servico = quant[quant_tam].servico;
-				servRoda_tam++;//VAGA OCUPADA
+				servRoda_tam++;//VAGA OCUPADA - PASSA PARA O PRÓXIMO ESPACO
 				printf("SEU CARRO FOI ENVIADO AO SERVIÇO DE RODAS!\n");
+				return servRoda;
 			}
 		}else if(quant[quant_tam].servico == 2){//AGORA O PROCESSO SE REPETE COM O SERVICO DE HIGIENE
 			if(servHigi_tam > MAX_HIGI){
 				printf("ESTE SERVIÇO ESTÁ OCUPADO! AGUARDE NA FILA\n");
+				strcpy(fila[fila_tam].placa, quant[quant_tam].placa);
+				strcpy(fila[fila_tam].modelo, quant[quant_tam].modelo);
+				fila[fila_tam].servico = quant[quant_tam].servico;
+				fila_tam++;
+				return fila;
 			}else{
 				strcpy(servHigi[servHigi_tam].placa, quant[quant_tam].placa);
 				strcpy(servHigi[servHigi_tam].modelo, quant[quant_tam].modelo);
 				servHigi[servHigi_tam].servico = quant[quant_tam].servico;
 				servHigi_tam++;//VAGA OCUPADA
 				printf("SEU CARRO FOI ENVIADO AO SERVIÇO DE HIGIENE!\n");
+				return servHigi;
 			}
 		}
 		quant_tam++;//O NUMERO É INCREMENTADO PARA O PRÓXIMO A SER PREENCHIDO
-	}
-	
+	}	
 }
+
 void atenderRodas(){ //FUNCAO PARA SERVICO DE RODAS
+
 }
+
 void atenderHigiene(){ //FUNCAO PARA SERVICO DE HIGIENE
+
 }
-void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO
+
+void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO(incompleto)
+	int opcao = 0;
+	fim_max += FATIA;
+	fim = (Carro*)malloc(sizeof(Carro)*fim_max);
+	
+	printf("ESCOLHA A OPÇÃO DE QUAL CARRO VOCE DESEJA FINALIZAR:\n[1] - SERVIÇO DE RODAS\n[2] - SERVIÇO DE HIGIENIZAÇÃO\n");
+	scanf("%d", &opcao);
+	switch(opcao){
+		case 1:
+			//REALIZAR TRANSFERENCIA DE DADOS DA ESTRUTURA DE SERVRODAS PARA FINAL
+			break;
+		case 2:
+			//REALIZAR TRANSFERENCIA DE DADOS DA ESTRUTURA DE SERVHIGI PARA FINAL
+			break;
+	}
 }
+
 void tirarCarro(){ //FUNCAO PARA "EXCLUIR CARRO"
+
 }
+
 void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
-	printf("\n=========================\n");
-	printf("CADASTRADOS - EM ESPERA\n");//EM PRIMEIRO LUGAR - OS CARROS QUE ESTARAO NA FILA DE ESPERA
-	printf("==========================\n");
+	printf("\n============================\n");
+	printf("CADASTRADOS - FILA DE ESPERA\n");//EM PRIMEIRO LUGAR - OS CARROS QUE ESTARAO NA FILA DE ESPERA
+	printf("=============================\n");
 	int i;
-	for(i=0; i<=quant_tam; i++){
-		printf("\nMODELO: %s", quant[i].modelo);
-		printf("\nPLACA: %s", quant[i].placa);
-		printf("\nSERVICO: %d", quant[i].servico);
+	for(i=0; i<fila_tam; i++){
+		printf("\nMODELO: %s", fila[i].modelo);
+		printf("\nPLACA: %s", fila[i].placa);
+		printf("\nSERVICO: %d", fila[i].servico);
 		printf("\n_______________________________");
 	}
 	printf("\n=========================\n");
@@ -130,7 +173,7 @@ void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
 }
 
 int main(){//FUNCAO "INICIO"
-	//ALOCACAO DE MEMORIA PARA OS PONTEIROS SERVRODA E SERVHII A FIM DE GUARDA-LOS NAS RESPECTIVAS ESTRUTURAS
+	//ALOCACAO DE MEMORIA PARA OS PONTEIROS SERVRODA E SERVHIGI A FIM DE GUARDA-LOS NAS RESPECTIVAS ESTRUTURAS
 	servRoda = (Carro*)malloc(sizeof(Carro) * MAX_RODA);
     servHigi = (Carro*)malloc(sizeof(Carro) * MAX_HIGI);
 	
@@ -176,6 +219,8 @@ int main(){//FUNCAO "INICIO"
 			case 7:
 				printf("TAREFA ENCERRADA!\n");
 				free(quant);//LIBERAR MEMORIA
+				free(servRoda);
+				free(servHigi);
 				break;
 			default:
 				printf("ESTE COMANDO NÃO EXISTE! DIGITE NOVAMENTE\n");
