@@ -5,9 +5,9 @@
 	2 - FUNCAO CADASTRO COM ALOCACAO DINAMICA IMPLEMENTADA
 	3 - FUNCOES DE ENVIAR CARROS AO ESPACO DE ATENDIMENTO LIMITADO
 	4 - FUNCAO DE VISUALIZAR TODOS
+	5 - FUNCAO DE FINALIZAR SERVICOS
 	
 	O QUE PRECISA SER FEITO NESTE CODIGO:
-	1 - IMPLEMENTAR FUNCAO DE FINALIZAR SERVICO --> ALOCACAO DE FILA SOMENTE PARA 4 -------> 50%
 	2 - IMPLEMENTAR FUNCAO DE DEVOLVER CARRO -----> ALOCACAO DINAMICA
 	3 - PERMITIR ALOCACAO AUTOMATICA
 	
@@ -125,7 +125,7 @@ int i;
         }
 }
 
-void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO(incompleto)
+void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO
 	int opcao = 0;
 	int i;
 	//ALOCACAO DE MEMORIA PARA A ESTRUTURA DE FINALIZADOS
@@ -202,7 +202,11 @@ void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO(incompleto)
 }
 
 void tirarCarro(){ //FUNCAO PARA "EXCLUIR CARRO"
-
+	printf("CARRO DEVOLVIDO: \n");
+	printf("PLACA: %s",fim[fim_tam].placa);
+	printf("\nMODELO: %s",fim[fim_tam].modelo);
+	printf("\nSERVIÇO: %d",fim[fim_tam].servico);
+	fim_tam--;
 }
 
 void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
@@ -232,6 +236,15 @@ void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
 			printf("\nPLACA: %s", servHigi[i].placa);
 			printf("\n_____________________________________\n");
 	}
+	printf("\n===========================\n");
+	printf("CARROS PRONTOS PARA DEVOLUÇÃO\n");//TERCEIRO LUGAR - OS CARROS EM SERVICO DE HIGIENE
+	printf("=============================\n");
+	for(i=0; i<fim_tam;i++){
+			printf("\nMODELO: %s", fim[i].modelo);
+			printf("\nPLACA: %s", fim[i].placa);
+			printf("\nSERVIÇO: %d",fim[i].servico);
+			printf("\n_____________________________________\n");
+		}
 }
 
 int main(){//FUNCAO "INICIO"
