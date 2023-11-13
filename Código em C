@@ -105,30 +105,10 @@ void cadastrar(){ //FUNCAO DE CADASTRO
 		quant_tam++;//O NUMERO É INCREMENTADO PARA O PRÓXIMO A SER PREENCHIDO
 }
 
-void atenderRodas(){ //FUNCAO PARA SERVICO DE RODAS
-	printf("\n=========================\n");
-	printf("CARROS EM SERVICO DE RODA\n");//SEGUNDO LUGAR - OS CARROS EM SERVICO DE RODA
-	printf("==========================\n");
-	int i;
-	for(i=0; i<servRoda_tam;i++){
-			printf("\nMODELO: %s", servRoda[i].modelo);
-			printf("\nPLACA: %s", servRoda[i].placa);
-			printf("\n_____________________________________\n");
-	}
-	system("pause");
+void atenderRodas(){
 }
 
-void atenderHigiene(){ //FUNCAO PARA SERVICO DE HIGIENE
-	int i;
-	printf("\n===========================\n");
-	printf("CARROS EM SERVICO DE HIGIENE\n");//TERCEIRO LUGAR - OS CARROS EM SERVICO DE HIGIENE
-	printf("=============================\n");
-	for(i=0; i<servHigi_tam;i++){
-			printf("\nMODELO: %s", servHigi[i].modelo);
-			printf("\nPLACA: %s", servHigi[i].placa);
-			printf("\n_____________________________________\n");
-	}
-	system("pause");
+void atenderHigiene(){
 }
 
 void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO(incompleto)
