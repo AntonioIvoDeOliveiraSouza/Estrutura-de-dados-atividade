@@ -76,14 +76,12 @@ void cadastrar(){ //FUNCAO DE CADASTRO
 				strcpy(fila[fila_tam].modelo, quant[quant_tam].modelo);
 				fila[fila_tam].servico = quant[quant_tam].servico;
 				fila_tam++;
-				return fila;
 			}else{//CASO HAJA VAGA, OS DADOS DO CADASTRADOS SERAO COPIADO PARA A FILA DE SERVICO E EM SEGUIDA LIBERADO DA FILA DE CADASTRADOS "EM ESPERA"
 				strcpy(servRoda[servRoda_tam].placa, quant[quant_tam].placa);
 				strcpy(servRoda[servRoda_tam].modelo, quant[quant_tam].modelo);
 				servRoda[servRoda_tam].servico = quant[quant_tam].servico;
 				servRoda_tam++;//VAGA OCUPADA - PASSA PARA O PRÓXIMO ESPACO
 				printf("SEU CARRO FOI ENVIADO AO SERVIÇO DE RODAS!\n");
-				return servRoda;
 			}
 		}else if(quant[quant_tam].servico == 2){//AGORA O PROCESSO SE REPETE COM O SERVICO DE HIGIENE
 			if(servHigi_tam > MAX_HIGI){
@@ -92,23 +90,39 @@ void cadastrar(){ //FUNCAO DE CADASTRO
 				strcpy(fila[fila_tam].modelo, quant[quant_tam].modelo);
 				fila[fila_tam].servico = quant[quant_tam].servico;
 				fila_tam++;
-				return fila;
 			}else{
 				strcpy(servHigi[servHigi_tam].placa, quant[quant_tam].placa);
 				strcpy(servHigi[servHigi_tam].modelo, quant[quant_tam].modelo);
 				servHigi[servHigi_tam].servico = quant[quant_tam].servico;
 				servHigi_tam++;//VAGA OCUPADA
 				printf("SEU CARRO FOI ENVIADO AO SERVIÇO DE HIGIENE!\n");
-				return servHigi;
 			}
 		}
 		quant_tam++;//O NUMERO É INCREMENTADO PARA O PRÓXIMO A SER PREENCHIDO
 }
 
 void atenderRodas(){
+printf("\n=========================\n");
+        printf("CARROS EM SERVICO DE RODA\n");//SEGUNDO LUGAR - OS CARROS EM SERVICO DE RODA
+        printf("==========================\n");
+        int i;
+        for(i=0; i<servRoda_tam;i++){
+                        printf("\nMODELO: %s", servRoda[i].modelo);
+                        printf("\nPLACA: %s", servRoda[i].placa);
+                        printf("\n_____________________________________\n");
+        }
 }
 
 void atenderHigiene(){
+int i;
+        printf("\n===========================\n");
+        printf("CARROS EM SERVICO DE HIGIENE\n");//TERCEIRO LUGAR - OS CARROS EM SERVICO DE HIGIENE
+        printf("=============================\n");
+        for(i=0; i<servHigi_tam;i++){
+                        printf("\nMODELO: %s", servHigi[i].modelo);
+                        printf("\nPLACA: %s", servHigi[i].placa);
+                        printf("\n_____________________________________\n");
+        }
 }
 
 void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO(incompleto)
@@ -218,7 +232,6 @@ void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
 			printf("\nPLACA: %s", servHigi[i].placa);
 			printf("\n_____________________________________\n");
 	}
-	system("pause");
 }
 
 int main(){//FUNCAO "INICIO"
