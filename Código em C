@@ -102,37 +102,32 @@ void cadastrar(){ //FUNCAO DE CADASTRO
 }
 
 void atenderRodas(){
-printf("\n=========================\n");
-        printf("CARROS EM SERVICO DE RODA\n");//SEGUNDO LUGAR - OS CARROS EM SERVICO DE RODA
-        printf("==========================\n");
-        int i;
-        for(i=0; i<servRoda_tam;i++){
-                        printf("\nMODELO: %s", servRoda[i].modelo);
-                        printf("\nPLACA: %s", servRoda[i].placa);
-                        printf("\n_____________________________________\n");
-        }
+	printf("\n=========================\n");
+    printf("CARROS EM SERVICO DE RODA\n");//SEGUNDO LUGAR - OS CARROS EM SERVICO DE RODA
+    printf("==========================\n");
+    int i;
+    for(i=0; i<servRoda_tam;i++){
+        printf("\nMODELO: %s", servRoda[i].modelo);
+        printf("\nPLACA: %s", servRoda[i].placa);
+        printf("\n_____________________________________\n");
+    }
 }
 
 void atenderHigiene(){
 int i;
-        printf("\n===========================\n");
-        printf("CARROS EM SERVICO DE HIGIENE\n");//TERCEIRO LUGAR - OS CARROS EM SERVICO DE HIGIENE
-        printf("=============================\n");
-        for(i=0; i<servHigi_tam;i++){
-                        printf("\nMODELO: %s", servHigi[i].modelo);
-                        printf("\nPLACA: %s", servHigi[i].placa);
-                        printf("\n_____________________________________\n");
-        }
+    printf("\n===========================\n");
+    printf("CARROS EM SERVICO DE HIGIENE\n");//TERCEIRO LUGAR - OS CARROS EM SERVICO DE HIGIENE
+    printf("=============================\n");
+	for(i=0; i<servHigi_tam;i++){
+        printf("\nMODELO: %s", servHigi[i].modelo);
+        printf("\nPLACA: %s", servHigi[i].placa);
+    	printf("\n_____________________________________\n");
+	}
 }
 
 void finalizarServico(){ //FUNCAO PARA FINALIZAR SERVICO
 	int opcao = 0;
 	int i;
-	//ALOCACAO DE MEMORIA PARA A ESTRUTURA DE FINALIZADOS
-	fim_max += FATIA;
-	fim = (Carro*)malloc(sizeof(Carro)*fim_max);
-	aux_max += FATIA;
-	aux = (Carro*)malloc(sizeof(Carro)*aux_max);
 	
 	printf("ESCOLHA A OPÇÃO DE QUAL CARRO VOCE DESEJA FINALIZAR:\n[1] - SERVIÇO DE RODAS\n[2] - SERVIÇO DE HIGIENIZAÇÃO\n");
 	scanf("%d", &opcao);
@@ -206,7 +201,19 @@ void tirarCarro(){ //FUNCAO PARA "EXCLUIR CARRO"
 	printf("PLACA: %s",fim[fim_tam].placa);
 	printf("\nMODELO: %s",fim[fim_tam].modelo);
 	printf("\nSERVIÇO: %d",fim[fim_tam].servico);
+	printf("INICIO DE TRANSFERENCIA\n");
+	
+	int i = 0;//EM LOOP - GUARDAR EM AUXILIAR DADOS DOS QUE NÃO SERÃO EXCLUIDOS
+	for(i+1; i<fim_tam; i++){
+		strcpy(aux[aux_tam].modelo, fim[fim_tam].modelo);
+		strcpy(aux[aux_tam].placa, fim[fim_tam].placa);
+	}
+	free(fim); //LIBERAR MEMORIA
 	fim_tam--;
+	for(i=0; i<fim_tam;i++){ //PREENCHER FILA COM OS CARROS RESTANTES
+		strcpy(fim[fim_tam].modelo, aux[aux_tam].modelo);
+		strcpy(fim[fim_tam].placa, aux[aux_tam].placa);
+	}
 }
 
 void verTodos(){ //FUNCAO PARA VISUALIZAR TODOS OS CARROS NO SISTEMA
@@ -258,14 +265,21 @@ int main(){//FUNCAO "INICIO"
     }
     
     quant_max+=FATIA;//A CADA CHAMADA, O ESPACO CRESCE "FATIA" VEZES
-	fila_max+=FATIA;
 	quant = (Carro*)malloc(sizeof(Carro)*quant_max);//REALOCAR MAIS ESPAÇO A CADA CHAMADA
+	fila_max+=FATIA;
 	fila = (Carro*)malloc(sizeof(Carro)*fila_max);
 	
-	if (quant == NULL){ //TRATAMENTO DE ERRO
+	if (quant == NULL || fila == NULL){ //TRATAMENTO DE ERRO
 		printf("[PROBLEMA NA ALOCAÇÃO DE MEMÓRIA!] - PROGRAMA FINALIZADO!\n");
 		exit(1);
 	}
+	
+	fim_max+=FATIA;
+	fim = (Carro*)malloc(sizeof(Carro)*fim_max);
+	//ALOCACAO DE MEMORIA PARA A ESTRUTURA DE FINALIZADOS
+	aux_max += FATIA;
+	aux = (Carro*)malloc(sizeof(Carro)*aux_max);
+	
 	int opcao = 0; //VARIAVEL FUNCAO
 	setlocale(LC_ALL,"Portuguese");//DEFININDO IDIOMA EM PORTUGUES
 	while(opcao != 7){//LOOP DO MENU
